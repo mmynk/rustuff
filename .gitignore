@@ -1,0 +1,9 @@
+# JetBrains
+.idea
+.fleet
+
+# MacOS
+.DS_Store
+
+# Python
+*.pyc
