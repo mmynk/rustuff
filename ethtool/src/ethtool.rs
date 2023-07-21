@@ -1,13 +1,13 @@
 use neli::{
-    socket::NlSocketHandle,
-    consts::{socket::NlFamily, nl::{NlmFFlags, NlmF, Nlmsg},
-    genl::Index},
+    consts::{socket::NlFamily, nl::{NlmFFlags, NlmF, Nlmsg}, genl::Index},
+    err::NlError,
+    genl::{Genlmsghdr, Nlattr},
     nl::{NlPayload, Nlmsghdr},
+    socket::NlSocketHandle,
     types::{GenlBuffer, Buffer},
-    genl::Genlmsghdr, err::NlError
 };
 
-use crate::common::{ETHTOOL_GENL_VERSION, ETHTOOL_GENL_NAME, ETHTOOL_MSG_STATS_GET};
+use crate::common::{ETHTOOL_GENL_VERSION, ETHTOOL_GENL_NAME, ETHTOOL_MSG_STATS_GET, ETHTOOL_A_HEADER_DEV_INDEX};
 
 pub fn connect() {
     let mut sock = NlSocketHandle::connect(
@@ -17,8 +17,11 @@ pub fn connect() {
     ).expect("failed to connect!");
     // println!("Connected successfully!");
 
-    // generic message
-    let attrs: GenlBuffer<Index, Buffer> = GenlBuffer::new();
+    let attr = Nlattr::new(true, false, ETHTOOL_A_HEADER_DEV_INDEX, 2).unwrap();
+    let mut attrs: GenlBuffer<u16, Buffer> = GenlBuffer::new();
+    attrs.push(attr);
+
+    // attrs.push()
     let genlhdr = Genlmsghdr::new(ETHTOOL_GENL_NAME, ETHTOOL_GENL_VERSION, attrs);
 
     let nlhdr = {

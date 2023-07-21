@@ -1,6 +1,8 @@
 pub const ETHTOOL_GENL_NAME: u8 = 0x14;
 pub const ETHTOOL_GENL_VERSION: u8 = 1;
 
+pub const ETHTOOL_A_HEADER_DEV_INDEX: u16 = 3;
+
 // #[neli_enum(serialized_type = "u8")]
 // pub enum EthtoolCmd {
 //     // Userspace to kernel
