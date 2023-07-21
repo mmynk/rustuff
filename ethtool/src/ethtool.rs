@@ -1,20 +1,23 @@
 use neli::{
-    consts::{socket::NlFamily, nl::{NlmFFlags, NlmF, Nlmsg}, genl::Index},
+    consts::{
+        genl::Index,
+        nl::{NlmF, NlmFFlags, Nlmsg},
+        socket::NlFamily,
+    },
     err::NlError,
     genl::{Genlmsghdr, Nlattr},
     nl::{NlPayload, Nlmsghdr},
     socket::NlSocketHandle,
-    types::{GenlBuffer, Buffer},
+    types::{Buffer, GenlBuffer},
 };
 
-use crate::common::{ETHTOOL_GENL_VERSION, ETHTOOL_GENL_NAME, ETHTOOL_MSG_STATS_GET, ETHTOOL_A_HEADER_DEV_INDEX};
+use crate::common::{
+    ETHTOOL_A_HEADER_DEV_INDEX, ETHTOOL_GENL_NAME, ETHTOOL_GENL_VERSION, ETHTOOL_MSG_STATS_GET,
+};
 
 pub fn connect() {
-    let mut sock = NlSocketHandle::connect(
-        NlFamily::Generic,
-        None,
-        &[],
-    ).expect("failed to connect!");
+    let mut sock =
+        NlSocketHandle::connect(NlFamily::Generic, None, &[]).expect("failed to connect!");
     // println!("Connected successfully!");
 
     let attr = Nlattr::new(true, false, ETHTOOL_A_HEADER_DEV_INDEX, 2).unwrap();
@@ -37,7 +40,7 @@ pub fn connect() {
 
     sock.send(nlhdr).expect("failed to send msg!");
 
-    match  sock.recv::<Nlmsg, Genlmsghdr<u8, Index>>() {
+    match sock.recv::<Nlmsg, Genlmsghdr<u8, Index>>() {
         Ok(response) => handle_response(response),
         Err(err) => handle_error(err),
     };
