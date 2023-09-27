@@ -1,0 +1,11 @@
+[package]
+name = "tc"
+version = "0.1.0"
+edition = "2021"
+authors = ["Mohit Mayank <mohit.ritanil@gmail.com"]
+
+[dependencies]
+thiserror = "1.0"
+netlink-packet-route = "0.17"
+netlink-packet-core = "0.7"
+netlink-sys = "0.8"
