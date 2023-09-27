@@ -1,17 +1,1 @@
-# Rust
-target/
-
-# Python
-*.pyc
-
-# JetBrains
-.idea
-.fleet
-
-# MacOS
-.DS_Store
-
-
-# Added by cargo
-
-/target
+target
