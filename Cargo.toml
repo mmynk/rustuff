@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+    "ethtool",
+    "sockets",
+    "tc"
+]
+
+[patch.crates-io]
+netlink-packet-route = { path = "../rust-netlink/netlink-packet-route" }
